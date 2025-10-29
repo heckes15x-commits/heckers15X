@@ -1,0 +1,93 @@
+-- Judul: (Masukkan judul jika perlu, mis. Saitama Script)
+--// Heckes15 Intro Loader
+--// Made by Putri for Rehan 😈
+
+local Players = game:GetService("Players")
+local player = Players.LocalPlayer
+local StarterGui = game:GetService("StarterGui")
+
+-- Hapus GUI lama (pcall supaya anti-error)
+pcall(function() StarterGui:ClearAllChildren() end)
+
+-- Buat ScreenGui
+local gui = Instance.new("ScreenGui")
+gui.Name = "Heckes15Intro"
+gui.ResetOnSpawn = false
+gui.Parent = player:WaitForChild("PlayerGui")
+
+-- Background hitam glitch
+local bg = Instance.new("Frame")
+bg.Size = UDim2.new(1, 0, 1, 0)
+bg.BackgroundColor3 = Color3.new(0, 0, 0)
+bg.BorderSizePixel = 0
+bg.Parent = gui
+
+-- Teks Heckes15
+local text = Instance.new("TextLabel")
+text.Size = UDim2.new(1, 0, 1, 0)
+text.BackgroundTransparency = 1
+text.TextColor3 = Color3.new(1, 0, 0)
+text.TextScaled = true
+text.Font = Enum.Font.GothamBlack
+text.Text = ""
+text.Parent = bg
+
+-- Efek suara (pcall agar tidak crash kalau asset diblokir)
+pcall(function()
+	local sound = Instance.new("Sound", bg)
+	sound.SoundId = "rbxassetid://1844158571" -- suara glitch hacker
+	sound.Volume = 2
+	sound:Play()
+end)
+
+-- Efek ketik “Heckes15”
+local message = "HECKES15"
+for i = 1, #message do
+	pcall(function()
+		text.Text = string.sub(message, 1, i)
+	end)
+	task.wait(0.15)
+end
+
+-- Tambahkan Avatar Hitam muncul (opsional, pcall supaya aman)
+pcall(function()
+	local char = player.Character or player.CharacterAdded:Wait()
+	for _, part in pairs(char:GetChildren()) do
+		if part:IsA("BasePart") then
+			part.Color = Color3.new(0, 0, 0)
+		end
+	end
+end)
+
+-- Efek glitch cepat
+for i = 1, 10 do
+	pcall(function()
+		bg.BackgroundTransparency = math.random()
+		text.TextColor3 = Color3.new(math.random(), 0, 0)
+	end)
+	task.wait(0.05)
+end
+
+-- Hilang perlahan
+for i = 1, 30 do
+	pcall(function()
+		text.TextTransparency = i / 30
+		bg.BackgroundTransparency = i / 30
+	end)
+	task.wait(0.05)
+end
+
+pcall(function() gui:Destroy() end)
+
+-- =========================
+-- BAGIAN INI: Masukkan loadstring kamu di bawah
+-- =========================
+
+-- Contoh 1 (pakai raw gist)
+-- loadstring(game:HttpGet("https://gist.githubusercontent.com/USER/HASH/raw/NamaScript.lua", true))()
+
+-- Contoh 2 (inline)
+-- loadstring([==[ <isi script di sini> ]==])()
+
+-- << MASUKKAN LOADSTRING KAMU DI SINI >>
+loadstring(game:HttpGet("https://raw.githubusercontent.com/Super-XXX-Source/VODICA-V3.4/refs/heads/main/Brookhaven%20Gui"))()
