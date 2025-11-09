@@ -1,0 +1,276 @@
+-- Script Lua FE GUI Draggable: "CyberSecurityLoader" - Cyber Security Script List GUI (Anti-Error Universal)
+-- Buatan heckes15 - Persistent, Anti-Crash, Handle Respawn & Nil Checks
+-- Fitur: GUI bisa digeser, tombol X untuk tutup, tombol Load Scripts untuk munculkan GUI daftar script (Universal FE, cyber security theme: badge spoof, network tools, FE bypass).
+-- Semua script keyless, anti-error, dari sumber trusted 2025 (OP FE scripts with security/hacking sim).
+
+local Players = game:GetService("Players")
+local TweenService = game:GetService("TweenService")
+
+local player = Players.LocalPlayer
+local playerGui = player:WaitForChild("PlayerGui")
+
+-- Daftar loadstring script Cyber Security Theme (FE OP 2025, keyless)
+local cyberScripts = {
+    {name = "Verified Badge Spoof", url = "https://pastebin.com/raw/qJwH9964", desc = "Fake verified badge - Identity security bypass, FE universal"},
+    {name = "Avtor FE Badge Hub", url = "https://raw.githubusercontent.com/ffedex/characters/refs/heads/main/chars", desc = "More FE badges & features - Telegram security tools sim"},
+    {name = "Motiona Network Flood", url = "https://raw.githubusercontent.com/BeemTZy/Motiona/refs/heads/main/source.lua", desc = "Super ring parts flood - Simulate network attack, no message"},
+    {name = "Universal Super Ring V3", url = "https://rawscripts.net/raw/Universal-Script-SUPER-RING-PARTS-V3-WITH-NO-MESSAGE-26385", desc = "OP ring parts - Cyber flood tool, FE 2025"},
+    {name = "Qwerty Encryption Bypass", url = "https://raw.githubusercontent.com/randomstring0/Qwerty/refs/heads/main/qwerty38.lua", desc = "Qwerty FE bypass - Anti-detection encryption sim"},
+    {name = "Kyuu Firewall Crack", url = "https://raw.githubusercontent.com/dqtixz/kyuu-is-fire/refs/heads/main/and%20projeto%20lkb%20Super%20Ring", desc = "Super ring with firewall crack - Security exploit"},
+    {name = "Pastefy Anti-Cheat Disable", url = "https://pastefy.app/wxVAgZpT/raw", desc = "Anti-cheat disable tool - FE security fix 2025"}
+}
+
+-- Fungsi load script (anti-error)
+local function loadScript(url, name)
+    local success = pcall(function()
+        loadstring(game:HttpGet(url))()
+    end)
+    if success then
+        print(name .. " loaded! Cyber security tool activated. 🔒")
+    else
+        warn("Gagal load " .. name .. " (cek koneksi). Coba executor lain.")
+    end
+end
+
+-- Fungsi buat GUI Daftar
+local function createCyberGUI()
+    local success = pcall(function()
+        local oldCyberGui = playerGui:FindFirstChild("CyberGUI")
+        if oldCyberGui then oldCyberGui:Destroy() end
+        
+        local cyberScreenGui = Instance.new("ScreenGui")
+        cyberScreenGui.Name = "CyberGUI"
+        cyberScreenGui.Parent = playerGui
+        cyberScreenGui.ResetOnSpawn = false
+
+        local cyberFrame = Instance.new("Frame")
+        cyberFrame.Size = UDim2.new(0, 350, 0, 350)
+        cyberFrame.Position = UDim2.new(0.5, -175, 0.5, -175)
+        cyberFrame.BackgroundColor3 = Color3.fromRGB(50, 50, 50)
+        cyberFrame.BorderSizePixel = 0
+        cyberFrame.Active = true
+        cyberFrame.Draggable = true
+        cyberFrame.Parent = cyberScreenGui
+
+        local cyberCorner = Instance.new("UICorner")
+        cyberCorner.CornerRadius = UDim.new(0, 10)
+        cyberCorner.Parent = cyberFrame
+
+        local cyberTitle = Instance.new("TextLabel")
+        cyberTitle.Size = UDim2.new(1, 0, 0, 30)
+        cyberTitle.BackgroundColor3 = Color3.fromRGB(40, 40, 40)
+        cyberTitle.Text = "🔒 Cyber Security Scripts 🔒"
+        cyberTitle.TextColor3 = Color3.fromRGB(255, 255, 255)
+        cyberTitle.TextScaled = true
+        cyberTitle.Font = Enum.Font.SourceSansBold
+        cyberTitle.Parent = cyberFrame
+
+        local titleCorner = Instance.new("UICorner")
+        titleCorner.CornerRadius = UDim.new(0, 10)
+        titleCorner.Parent = cyberTitle
+
+        local scrollFrame = Instance.new("ScrollingFrame")
+        scrollFrame.Size = UDim2.new(1, -20, 1, -80)
+        scrollFrame.Position = UDim2.new(0, 10, 0, 40)
+        scrollFrame.BackgroundTransparency = 1
+        scrollFrame.BorderSizePixel = 0
+        scrollFrame.ScrollBarThickness = 10
+        scrollFrame.Parent = cyberFrame
+
+        local listLayout = Instance.new("UIListLayout")
+        listLayout.SortOrder = Enum.SortOrder.LayoutOrder
+        listLayout.Padding = UDim.new(0, 5)
+        listLayout.Parent = scrollFrame
+
+        for i, script in ipairs(cyberScripts) do
+            local scriptButton = Instance.new("TextButton")
+            scriptButton.Size = UDim2.new(1, 0, 0, 40)
+            scriptButton.BackgroundColor3 = Color3.fromRGB(0, 170, 255)
+            scriptButton.Text = script.name .. "\n(" .. script.desc .. ")"
+            scriptButton.TextColor3 = Color3.fromRGB(255, 255, 255)
+            scriptButton.TextScaled = true
+            scriptButton.Font = Enum.Font.SourceSans
+            scriptButton.TextYAlignment = Enum.TextYAlignment.Top
+            scriptButton.LayoutOrder = i
+            scriptButton.Parent = scrollFrame
+
+            local buttonCorner = Instance.new("UICorner")
+            buttonCorner.CornerRadius = UDim.new(0, 5)
+            buttonCorner.Parent = scriptButton
+
+            scriptButton.MouseEnter:Connect(function()
+                TweenService:Create(scriptButton, TweenInfo.new(0.2), {BackgroundColor3 = Color3.fromRGB(0, 150, 200)}):Play()
+            end)
+            scriptButton.MouseLeave:Connect(function()
+                TweenService:Create(scriptButton, TweenInfo.new(0.2), {BackgroundColor3 = Color3.fromRGB(0, 170, 255)}):Play()
+            end)
+
+            scriptButton.MouseButton1Click:Connect(function()
+                loadScript(script.url, script.name)
+                scriptButton.BackgroundColor3 = Color3.fromRGB(100, 100, 100)
+                scriptButton.Text = script.name .. " ✅\n(" .. script.desc .. ")"
+            end)
+        end
+
+        scrollFrame.CanvasSize = UDim2.new(0, 0, 0, listLayout.AbsoluteContentSize.Y + 10)
+        listLayout:GetPropertyChangedSignal("AbsoluteContentSize"):Connect(function()
+            scrollFrame.CanvasSize = UDim2.new(0, 0, 0, listLayout.AbsoluteContentSize.Y + 10)
+        end)
+
+        local closeCyberButton = Instance.new("TextButton")
+        closeCyberButton.Size = UDim2.new(0, 25, 0, 25)
+        closeCyberButton.Position = UDim2.new(1, -30, 0, 2.5)
+        closeCyberButton.BackgroundColor3 = Color3.fromRGB(255, 50, 50)
+        closeCyberButton.Text = "X"
+        closeCyberButton.TextColor3 = Color3.fromRGB(255, 255, 255)
+        closeCyberButton.TextScaled = true
+        closeCyberButton.Font = Enum.Font.SourceSansBold
+        closeCyberButton.Parent = cyberTitle
+
+        local closeCyberCorner = Instance.new("UICorner")
+        closeCyberCorner.CornerRadius = UDim.new(0, 5)
+        closeCyberCorner.Parent = closeCyberButton
+
+        closeCyberButton.MouseButton1Click:Connect(function()
+            cyberScreenGui:Destroy()
+        end)
+
+        cyberFrame.Size = UDim2.new(0, 0, 0, 0)
+        TweenService:Create(cyberFrame, TweenInfo.new(0.3, Enum.EasingStyle.Back), {Size = UDim2.new(0, 350, 0, 350)}):Play()
+
+        print("Cyber Security Script List GUI loaded! 🔒")
+    end)
+end
+
+-- Fungsi load Cyber
+local function loadCyber()
+    pcall(createCyberGUI)
+end
+
+-- Fungsi buat GUI Utama
+local function createMainGUI()
+    local success = pcall(function()
+        local oldMain = playerGui:FindFirstChild("CyberLoader")
+        if oldMain then oldMain:Destroy() end
+        
+        local screenGui = Instance.new("ScreenGui")
+        screenGui.Name = "CyberLoader"
+        screenGui.Parent = playerGui
+        screenGui.ResetOnSpawn = false
+
+        local mainFrame = Instance.new("Frame")
+        mainFrame.Size = UDim2.new(0, 300, 0, 200)
+        mainFrame.Position = UDim2.new(0.5, -150, 0.5, -100)
+        mainFrame.BackgroundColor3 = Color3.fromRGB(40, 40, 40)
+        mainFrame.BorderSizePixel = 0
+        mainFrame.Active = true
+        mainFrame.Draggable = true
+        mainFrame.Parent = screenGui
+
+        local mainCorner = Instance.new("UICorner")
+        mainCorner.CornerRadius = UDim.new(0, 10)
+        mainCorner.Parent = mainFrame
+
+        local titleBar = Instance.new("Frame")
+        titleBar.Size = UDim2.new(1, 0, 0, 30)
+        titleBar.BackgroundColor3 = Color3.fromRGB(30, 30, 30)
+        titleBar.Parent = mainFrame
+
+        local titleCorner = Instance.new("UICorner")
+        titleCorner.CornerRadius = UDim.new(0, 10)
+        titleCorner.Parent = titleBar
+
+        local title = Instance.new("TextLabel")
+        title.Size = UDim2.new(1, -30, 1, 0)
+        title.Position = UDim2.new(0, 5, 0, 0)
+        title.BackgroundTransparency = 1
+        title.Text = "🔒 Cyber Security Loader 🔒"
+        title.TextColor3 = Color3.fromRGB(255, 255, 255)
+        title.TextScaled = true
+        title.Font = Enum.Font.SourceSansBold
+        title.Parent = titleBar
+
+        local closeButton = Instance.new("TextButton")
+        closeButton.Size = UDim2.new(0, 25, 0, 25)
+        closeButton.Position = UDim2.new(1, -30, 0, 2.5)
+        closeButton.BackgroundColor3 = Color3.fromRGB(255, 50, 50)
+        closeButton.Text = "X"
+        closeButton.TextColor3 = Color3.fromRGB(255, 255, 255)
+        closeButton.TextScaled = true
+        closeButton.Font = Enum.Font.SourceSansBold
+        closeButton.Parent = titleBar
+
+        local closeCorner = Instance.new("UICorner")
+        closeCorner.CornerRadius = UDim.new(0, 5)
+        closeCorner.Parent = closeButton
+
+        closeButton.MouseEnter:Connect(function()
+            TweenService:Create(closeButton, TweenInfo.new(0.2), {BackgroundColor3 = Color3.fromRGB(255, 0, 0)}):Play()
+        end)
+        closeButton.MouseLeave:Connect(function()
+            TweenService:Create(closeButton, TweenInfo.new(0.2), {BackgroundColor3 = Color3.fromRGB(255, 50, 50)}):Play()
+        end)
+
+        local loadButton = Instance.new("TextButton")
+        loadButton.Size = UDim2.new(1, -20, 0, 50)
+        loadButton.Position = UDim2.new(0, 10, 0, 50)
+        loadButton.BackgroundColor3 = Color3.fromRGB(0, 255, 0)
+        loadButton.Text = "🔒 LOAD CYBER SECURITY SCRIPT LIST (ANTI-ERROR)"
+        loadButton.TextColor3 = Color3.fromRGB(255, 255, 255)
+        loadButton.TextScaled = true
+        loadButton.Font = Enum.Font.SourceSansBold
+        loadButton.Parent = mainFrame
+
+        local loadCorner = Instance.new("UICorner")
+        loadCorner.CornerRadius = UDim.new(0, 5)
+        loadCorner.Parent = loadButton
+
+        local infoLabel = Instance.new("TextLabel")
+        infoLabel.Size = UDim2.new(1, -20, 0, 50)
+        infoLabel.Position = UDim2.new(0, 10, 0, 110)
+        infoLabel.BackgroundTransparency = 1
+        infoLabel.Text = "Klik untuk daftar cyber security tools!\n(Badge spoof, FE bypass, network sim - Universal, anti-error)"
+        infoLabel.TextColor3 = Color3.fromRGB(200, 200, 200)
+        infoLabel.TextScaled = true
+        infoLabel.Font = Enum.Font.SourceSans
+        infoLabel.TextWrapped = true
+        infoLabel.Parent = mainFrame
+
+        local creditLabel = Instance.new("TextLabel")
+        creditLabel.Size = UDim2.new(1, -20, 0, 20)
+        creditLabel.Position = UDim2.new(0, 10, 1, -25)
+        creditLabel.BackgroundTransparency = 1
+        creditLabel.Text = "Buatan heckes15 🔥 (Anti-Error Oct 2025)"
+        creditLabel.TextColor3 = Color3.fromRGB(255, 100, 100)
+        creditLabel.TextScaled = true
+        creditLabel.Font = Enum.Font.SourceSansBold
+        creditLabel.Parent = mainFrame
+
+        loadButton.MouseButton1Click:Connect(function()
+            loadCyber()
+            infoLabel.Text = "Cyber Security Script List loaded! Pilih tool. 🔒"
+            infoLabel.TextColor3 = Color3.fromRGB(0, 255, 0)
+            loadButton.BackgroundColor3 = Color3.fromRGB(100, 100, 100)
+            loadButton.Text = "✅ LOADED"
+        end)
+
+        closeButton.MouseButton1Click:Connect(function()
+            local tweenOut = TweenService:Create(mainFrame, TweenInfo.new(0.3, Enum.EasingStyle.Back), {Size = UDim2.new(0, 0, 0, 0)})
+            tweenOut:Play()
+            tweenOut.Completed:Connect(function()
+                screenGui:Destroy()
+            end)
+        end)
+
+        mainFrame.Size = UDim2.new(0, 300, 0, 200)
+    end)
+end
+
+-- Jalankan
+createMainGUI()
+
+-- Persistent respawn
+player.CharacterAdded:Connect(function()
+    wait(1)
+    createMainGUI()
+end)
