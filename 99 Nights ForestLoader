@@ -1,0 +1,363 @@
+-- Script Lua FE GUI Draggable: "99NightsForestLoader" - 99 Nights in the Forest Script List GUI (Anti-Error Universal)
+-- Buatan heckes15 - Persistent, Anti-Crash, Handle Respawn & Nil Checks
+-- Fitur: GUI bisa digeser, tombol X untuk tutup, tombol Load Scripts untuk munculkan GUI daftar script (Universal FE, khusus 99 Nights in the Forest).
+-- Semua script keyless kecuali yang ditandai [KEY: code]. Auto-message: "99 Nights Script Loader Loaded! Choose script for auto farm, ESP, teleport! 🌲"
+
+local Players = game:GetService("Players")
+local TweenService = game:GetService("TweenService")
+local TextChatService = game:GetService("TextChatService")
+
+local player = Players.LocalPlayer
+local playerGui = player:WaitForChild("PlayerGui")
+
+-- Auto-message sesuai script (muncul otomatis di chat lu sebagai player message)
+local function autoChatMessage(msg)
+    pcall(function()
+        if TextChatService.ChatVersion == Enum.ChatVersion.TextChatService then
+            local textChannel = TextChatService:WaitForChild("TextChannels"):WaitForChild("RBXGeneral")
+            if textChannel then
+                textChannel:SendAsync(msg)  -- Message asli di chat lu
+            end
+        end
+        print(msg)  -- Console backup
+    end)
+end
+
+-- Kirim auto-message saat execute (sesuai tema)
+autoChatMessage("99 Nights Script Loader Loaded! Choose script for auto farm, ESP, teleport! 🌲")
+
+-- Daftar loadstring script untuk 99 Nights in the Forest (keyless mostly, dari sumber trusted 2025)
+local nightsScripts = {
+    {name = "Kenniel Hub", url = "https://raw.githubusercontent.com/Kenniel123/99-Nights-in-the-Forest/refs/heads/main/99%20Nights%20in%20the%20Forest", desc = "Auto farm, ESP, teleport - keyless"},
+    {name = "Voidware Add", url = "https://raw.githubusercontent.com/VapeVoidware/VW-Add/main/nightsintheforest.lua", desc = "Kill aura, auto hunger, bring items, ESP - keyless"},
+    {name = "Nazuro TP", url = "https://nazuro.xyz/99nights", desc = "Teleport chests, lost child - keyless"},
+    {name = "Rx1m CpsHub", url = "https://raw.githubusercontent.com/Rx1m/CpsHub/refs/heads/main/Hub", desc = "Auto win, infinite jump - keyless"},
+    {name = "Nouralddin Main", url = "https://raw.githubusercontent.com/nouralddin-abdullah/99-night/refs/heads/main/main-en.lua", desc = "Sky base, bring items, kill aura - keyless"},
+    {name = "Raygull Utility [KEYLESS]", url = "https://raw.githubusercontent.com/raygull3d/99-Nights-in-the-Forest-Script/refs/heads/main/99%20Days%20Scirpt%20By%20Raygull.lua", desc = "ESP, aimbot, auto tree farm, flying, teleport items/enemies - keyless"},
+    {name = "Raygull Beta", url = "https://raw.githubusercontent.com/raygull3d/99-Nights-in-the-Forest-Script/refs/heads/main/99%20Days%20Scirpt%20By%20Raygull%20Beta%201.0.lua", desc = "Beta with improved ESP, auto farm - keyless"},
+    {name = "Elude Hub", url = "https://raw.githubusercontent.com/DarkenedEssence/Elude/refs/heads/main/Loader.lua", desc = "Godmode farm, tree farming - keyless"},
+    {name = "Seriously56 No Key", url = "https://raw.githubusercontent.com/Seriously56/99-Nights/refs/heads/main/99%20nights", desc = "Bring items, kill aura, days farm - keyless"},
+    {name = "SpeedHubX", url = "https://raw.githubusercontent.com/AhmadV99/Speed-Hub-X/main/Speed%20Hub%20X.lua", desc = "Speed, fly, noclip - keyless"},
+    {name = "Updated October", url = "https://pastebin.com/raw/YgRSs7Pf", desc = "ESP, teleports, bring items - keyless"},
+    {name = "Vortex Hub", url = "https://pastefy.app/qxDbSVlo/raw", desc = "Auto farm, kill aura - keyless"},
+    {name = "Horizon Hub", url = "https://raw.githubusercontent.com/Laspard69/HorizonHub/refs/heads/main/loader.lua", desc = "Kill aura, chop aura, auto farm - keyless"},
+    {name = "Vex OP", url = "https://pastefy.app/ibClJUjE/raw", desc = "Auto plant, auto feed - keyless"},
+    {name = "Mobile PC Pastebin", url = "https://pastebin.com/raw/bhi4LinA", desc = "ESP, teleport chests - keyless"},
+    {name = "DarkEsc Hub", url = "https://raw.githubusercontent.com/DarkenedEssence/DarkEsc/refs/heads/main/Loader.lua", desc = "Bring items, kill aura, auto farm diamonds - keyless"},
+    {name = "ToastyXD Hub", url = "https://raw.githubusercontent.com/nouralddin-abdullah/99-night/refs/heads/main/main-en.lua", desc = "Sky base, bring items - keyless"},
+    {name = "Mobile 10000 Days", url = "https://raw.githubusercontent.com/TheDarkoneMarcillisePex/Other-Scripts/refs/heads/main/99%20Nights%20In%20The%20Forest%20GUI", desc = "Autofarm diamonds, bring everything - keyless"},
+    {name = "Gec Hub", url = "https://pastebin.com/raw/NTpCMwn8", desc = "Bring items, fly, kill aura, ESP - keyless"},
+    {name = "Best AutoFarm Diamonds", url = "https://pastebin.com/raw/7hfV4s5s", desc = "Auto farm diamonds - keyless"},
+    {name = "HoHo Hub", url = "https://pastebin.com/raw/QRfGNELm", desc = "Auto farm, kill aura, bring items - keyless"},
+    {name = "PolleserHub", url = "https://pastefy.app/Y4ic4T1s/raw", desc = "Auto farm, hitbox, ESP - keyless"},
+    {name = "99 Night Script", url = "https://pastebin.com/raw/53h15jAV", desc = "Kill aura, ESP, auto hunger - keyless"},
+    {name = "OverFlow Hub", url = "https://pastebin.com/raw/3T1VunNZ", desc = "Auto farm item, ESP - keyless"},
+    {name = "Cat Hub", url = "https://pastebin.com/raw/sQ6t8MU7", desc = "Auto farm tree, auto click - keyless"},
+    {name = "FoggyHub", url = "https://pastebin.com/raw/5rwbL0v9", desc = "ESP full, teleport - keyless"},
+    {name = "AnbuWin", url = "https://pastebin.com/raw/quQbccDD", desc = "Auto eat, auto bring - keyless"},
+    {name = "Alchemy Hub", url = "https://pastebin.com/raw/FmDrhT3m", desc = "Kill aura, auto open chest - keyless"},
+    {name = "Scripts GUI Fun", url = "https://pastebin.com/raw/pMVn317S", desc = "Auto farm, ESP - keyless"},
+    {name = "Auto Farm Diamonds", url = "https://raw.githubusercontent.com/thiennrb7/Script/refs/heads/main/autodiamonds.txt", desc = "Auto farm diamonds - keyless"},
+    {name = "Mod Bring Everything", url = "https://get-arvotheon-ontop.netlify.app/Loader.lua", desc = "Bring everything, kill aura - keyless"},
+    {name = "Snow Biome Script [POTENTIAL KEY]", url = "https://raw.githubusercontent.com/thiennrb7/Script/refs/heads/main/key 99.txt", desc = "Items farm, auto kill - potential key (named 'key 99.txt')"},
+    {name = "Auto Farm", url = "https://pastebin.com/raw/gHQGTNYH", desc = "Auto farm - keyless"},
+    {name = "Auto Win", url = "https://get-arvotheon-ontop.netlify.app/Loader.lua", desc = "Auto win, auto chest - keyless"},
+    {name = "Mobile Script", url = "https://raw.githubusercontent.com/Iliankytb/Iliankytb/main/Best99NightsInTheForest", desc = "Fly, ESP, bring item - keyless"},
+    {name = "Mobile Soluna", url = "https://raw.githubusercontent.com/alwaysmesmerizingyou/Soluna-API/refs/heads/main/99-Nights-in-the-Forest.lua", desc = "Mobile features - keyless"},
+    {name = "SpaceHub", url = "https://raw.githubusercontent.com/ago106/SpaceHub/refs/heads/main/loader.lua", desc = "Auto farm, mob aura - keyless"},
+    {name = "Hack Farm All", url = "https://raw.githubusercontent.com/m00ndiety/99-nights-in-the-forest/refs/heads/main/Main", desc = "Farm all item, ESP - keyless"},
+    {name = "Exploiting API", url = "https://api.exploitingis.fun/loader", desc = "Bring items, ESP - keyless"},
+    {name = "VoidWare Extra", url = "https://raw.githubusercontent.com/VapeVoidware/VWExtra/main/NightsInTheForest.lua", desc = "Auto collect trees, items - keyless"},
+    {name = "Hutao Hub", url = "https://raw.githubusercontent.com/SLK-gaming/Hutao-Hub/refs/heads/main/99-Nights-In-The-Forest.txt", desc = "Bring all, ESP, teleports - keyless"},
+    {name = "Adibhub No Key", url = "https://raw.githubusercontent.com/adibhub1/99-nighit-in-forest/refs/heads/main/99%20night%20in%20forest", desc = "General features - keyless"},
+    {name = "H4xScripts Loader", url = "https://raw.githubusercontent.com/H4xScripts/Loader/refs/heads/main/loader.lua", desc = "Kill aura, bring items, chest ESP - keyless"},
+    {name = "PigeonHub Autofarm Diamonds", url = "https://raw.githubusercontent.com/collonroger/pigeonhub/refs/heads/main/autofarmdiamonds.lua", desc = "Auto farm diamonds - keyless"}
+}
+
+-- Fungsi load script spesifik (anti-error: pcall loadstring, handle HttpGet fail)
+local function loadScript(url, name)
+    local success = pcall(function()
+        loadstring(game:HttpGet(url))()
+    end)
+    if success then
+        autoChatMessage(name .. " Loaded! Enjoy auto farm, ESP, teleport! 🌲")
+    else
+        warn("Gagal load " .. name .. " (cek koneksi atau HttpGet block). Coba executor lain.")
+    end
+end
+
+-- Fungsi buat GUI Daftar Script (muncul pas klik load)
+local function createNightsGUI()
+    local success = pcall(function()
+        local oldNightsGui = playerGui:FindFirstChild("NightsGUI")
+        if oldNightsGui then oldNightsGui:Destroy() end
+        
+        local nightsScreenGui = Instance.new("ScreenGui")
+        nightsScreenGui.Name = "NightsGUI"
+        nightsScreenGui.Parent = playerGui
+        nightsScreenGui.ResetOnSpawn = false
+
+        local nightsFrame = Instance.new("Frame")
+        nightsFrame.Name = "NightsFrame"
+        nightsFrame.Size = UDim2.new(0, 350, 0, 400)  -- Lebih tinggi untuk banyak script
+        nightsFrame.Position = UDim2.new(0.5, -175, 0.5, -200)
+        nightsFrame.BackgroundColor3 = Color3.fromRGB(50, 50, 50)
+        nightsFrame.BorderSizePixel = 0
+        nightsFrame.Active = true
+        nightsFrame.Draggable = true
+        nightsFrame.Parent = nightsScreenGui
+
+        local nightsCorner = Instance.new("UICorner")
+        nightsCorner.CornerRadius = UDim.new(0, 10)
+        nightsCorner.Parent = nightsFrame
+
+        local nightsTitle = Instance.new("TextLabel")
+        nightsTitle.Name = "Title"
+        nightsTitle.Size = UDim2.new(1, 0, 0, 30)
+        nightsTitle.Position = UDim2.new(0, 0, 0, 0)
+        nightsTitle.BackgroundColor3 = Color3.fromRGB(40, 40, 40)
+        nightsTitle.BorderSizePixel = 0
+        nightsTitle.Text = "🌲 99 Nights in the Forest Scripts 🌲"
+        nightsTitle.TextColor3 = Color3.fromRGB(255, 255, 255)
+        nightsTitle.TextScaled = true
+        nightsTitle.Font = Enum.Font.SourceSansBold
+        nightsTitle.Parent = nightsFrame
+
+        local titleCorner = Instance.new("UICorner")
+        titleCorner.CornerRadius = UDim.new(0, 10)
+        titleCorner.Parent = nightsTitle
+
+        -- Scrolling Frame untuk daftar script
+        local scrollFrame = Instance.new("ScrollingFrame")
+        scrollFrame.Name = "ScrollFrame"
+        scrollFrame.Size = UDim2.new(1, -20, 1, -80)
+        scrollFrame.Position = UDim2.new(0, 10, 0, 40)
+        scrollFrame.BackgroundTransparency = 1
+        scrollFrame.BorderSizePixel = 0
+        scrollFrame.ScrollBarThickness = 10
+        scrollFrame.Parent = nightsFrame
+
+        local listLayout = Instance.new("UIListLayout")
+        listLayout.SortOrder = Enum.SortOrder.LayoutOrder
+        listLayout.Padding = UDim.new(0, 5)
+        listLayout.Parent = scrollFrame
+
+        -- Buat tombol untuk setiap script
+        for i, script in ipairs(nightsScripts) do
+            local scriptButton = Instance.new("TextButton")
+            scriptButton.Name = script.name
+            scriptButton.Size = UDim2.new(1, 0, 0, 40)
+            scriptButton.BackgroundColor3 = Color3.fromRGB(0, 170, 255)
+            scriptButton.BorderSizePixel = 0
+            scriptButton.Text = script.name .. "\n(" .. script.desc .. ")"
+            scriptButton.TextColor3 = Color3.fromRGB(255, 255, 255)
+            scriptButton.TextScaled = true
+            scriptButton.Font = Enum.Font.SourceSans
+            scriptButton.TextYAlignment = Enum.TextYAlignment.Top
+            scriptButton.LayoutOrder = i
+            scriptButton.Parent = scrollFrame
+
+            local buttonCorner = Instance.new("UICorner")
+            buttonCorner.CornerRadius = UDim.new(0, 5)
+            buttonCorner.Parent = scriptButton
+
+            -- Hover efek
+            scriptButton.MouseEnter:Connect(function()
+                TweenService:Create(scriptButton, TweenInfo.new(0.2), {BackgroundColor3 = Color3.fromRGB(0, 150, 200)}):Play()
+            end)
+            scriptButton.MouseLeave:Connect(function()
+                TweenService:Create(scriptButton, TweenInfo.new(0.2), {BackgroundColor3 = Color3.fromRGB(0, 170, 255)}):Play()
+            end)
+
+            -- Event load script
+            scriptButton.MouseButton1Click:Connect(function()
+                loadScript(script.url, script.name)
+                scriptButton.BackgroundColor3 = Color3.fromRGB(100, 100, 100)
+                scriptButton.Text = script.name .. " ✅\n(" .. script.desc .. ")"
+            end)
+        end
+
+        -- Atur canvas size
+        scrollFrame.CanvasSize = UDim2.new(0, 0, 0, listLayout.AbsoluteContentSize.Y + 10)
+
+        -- Update canvas on change
+        listLayout:GetPropertyChangedSignal("AbsoluteContentSize"):Connect(function()
+            scrollFrame.CanvasSize = UDim2.new(0, 0, 0, listLayout.AbsoluteContentSize.Y + 10)
+        end)
+
+        local closeNightsButton = Instance.new("TextButton")
+        closeNightsButton.Name = "CloseNights"
+        closeNightsButton.Size = UDim2.new(0, 25, 0, 25)
+        closeNightsButton.Position = UDim2.new(1, -30, 0, 2.5)
+        closeNightsButton.BackgroundColor3 = Color3.fromRGB(255, 50, 50)
+        closeNightsButton.BorderSizePixel = 0
+        closeNightsButton.Text = "X"
+        closeNightsButton.TextColor3 = Color3.fromRGB(255, 255, 255)
+        closeNightsButton.TextScaled = true
+        closeNightsButton.Font = Enum.Font.SourceSansBold
+        closeNightsButton.Parent = nightsTitle
+
+        local closeNightsCorner = Instance.new("UICorner")
+        closeNightsCorner.CornerRadius = UDim.new(0, 5)
+        closeNightsCorner.Parent = closeNightsButton
+
+        -- Event close
+        closeNightsButton.MouseButton1Click:Connect(function()
+            nightsScreenGui:Destroy()
+        end)
+
+        -- Animasi muncul
+        nightsFrame.Size = UDim2.new(0, 0, 0, 0)
+        local tweenIn = TweenService:Create(nightsFrame, TweenInfo.new(0.3, Enum.EasingStyle.Back), {Size = UDim2.new(0, 350, 0, 400)})
+        tweenIn:Play()
+
+        autoChatMessage("99 Nights Script List Loaded! Pilih dari daftar. 🌲")
+    end)
+    
+    if success then
+        print("Nights daftar script loaded! 🌲")
+    else
+        warn("Gagal load Nights GUI!")
+    end
+end
+
+-- Fungsi load Nights (panggil createNightsGUI)
+local function loadNights()
+    pcall(createNightsGUI)
+end
+
+-- Fungsi buat GUI Loader utama (anti-error)
+local function createGUI()
+    local success = pcall(function()
+        local oldGui = playerGui:FindFirstChild("NightsLoader")
+        if oldGui then oldGui:Destroy() end
+        
+        local screenGui = Instance.new("ScreenGui")
+        screenGui.Name = "NightsLoader"
+        screenGui.Parent = playerGui
+        screenGui.ResetOnSpawn = false
+
+        local mainFrame = Instance.new("Frame")
+        mainFrame.Name = "MainFrame"
+        mainFrame.Size = UDim2.new(0, 300, 0, 200)
+        mainFrame.Position = UDim2.new(0.5, -150, 0.5, -100)
+        mainFrame.BackgroundColor3 = Color3.fromRGB(40, 40, 40)
+        mainFrame.BorderSizePixel = 0
+        mainFrame.Active = true
+        mainFrame.Draggable = true
+        mainFrame.Parent = screenGui
+
+        local corner = Instance.new("UICorner")
+        corner.CornerRadius = UDim.new(0, 10)
+        corner.Parent = mainFrame
+
+        local titleBar = Instance.new("Frame")
+        titleBar.Size = UDim2.new(1, 0, 0, 30)
+        titleBar.Position = UDim2.new(0, 0, 0, 0)
+        titleBar.BackgroundColor3 = Color3.fromRGB(30, 30, 30)
+        titleBar.BorderSizePixel = 0
+        titleBar.Parent = mainFrame
+
+        local titleCorner = Instance.new("UICorner")
+        titleCorner.CornerRadius = UDim.new(0, 10)
+        titleCorner.Parent = titleBar
+
+        local title = Instance.new("TextLabel")
+        title.Size = UDim2.new(1, -30, 1, 0)
+        title.Position = UDim2.new(0, 5, 0, 0)
+        title.BackgroundTransparency = 1
+        title.Text = "🌲 99 Nights in the Forest Loader 🌲"
+        title.TextColor3 = Color3.fromRGB(255, 255, 255)
+        title.TextScaled = true
+        title.Font = Enum.Font.SourceSansBold
+        title.Parent = titleBar
+
+        local closeButton = Instance.new("TextButton")
+        closeButton.Size = UDim2.new(0, 25, 0, 25)
+        closeButton.Position = UDim2.new(1, -30, 0, 2.5)
+        closeButton.BackgroundColor3 = Color3.fromRGB(255, 50, 50)
+        closeButton.BorderSizePixel = 0
+        closeButton.Text = "X"
+        closeButton.TextColor3 = Color3.fromRGB(255, 255, 255)
+        closeButton.TextScaled = true
+        closeButton.Font = Enum.Font.SourceSansBold
+        closeButton.Parent = titleBar
+
+        local closeCorner = Instance.new("UICorner")
+        closeCorner.CornerRadius = UDim.new(0, 5)
+        closeCorner.Parent = closeButton
+
+        closeButton.MouseEnter:Connect(function()
+            TweenService:Create(closeButton, TweenInfo.new(0.2), {BackgroundColor3 = Color3.fromRGB(255, 0, 0)}):Play()
+        end)
+        closeButton.MouseLeave:Connect(function()
+            TweenService:Create(closeButton, TweenInfo.new(0.2), {BackgroundColor3 = Color3.fromRGB(255, 50, 50)}):Play()
+        end)
+
+        local loadButton = Instance.new("TextButton")
+        loadButton.Size = UDim2.new(1, -20, 0, 50)
+        loadButton.Position = UDim2.new(0, 10, 0, 50)
+        loadButton.BackgroundColor3 = Color3.fromRGB(0, 255, 0)
+        loadButton.BorderSizePixel = 0
+        loadButton.Text = "🌲 LOAD 99 NIGHTS SCRIPT LIST (ANTI-ERROR)"
+        loadButton.TextColor3 = Color3.fromRGB(255, 255, 255)
+        loadButton.TextScaled = true
+        loadButton.Font = Enum.Font.SourceSansBold
+        loadButton.Parent = mainFrame
+
+        local loadCorner = Instance.new("UICorner")
+        loadCorner.CornerRadius = UDim.new(0, 5)
+        loadCorner.Parent = loadButton
+
+        local infoLabel = Instance.new("TextLabel")
+        infoLabel.Size = UDim2.new(1, -20, 0, 50)
+        infoLabel.Position = UDim2.new(0, 10, 0, 110)
+        infoLabel.BackgroundTransparency = 1
+        infoLabel.Text = "Klik untuk daftar script 99 Nights in the Forest!\n(Auto farm, ESP, teleport, kill aura - keyless mostly)"
+        infoLabel.TextColor3 = Color3.fromRGB(200, 200, 200)
+        infoLabel.TextScaled = true
+        infoLabel.Font = Enum.Font.SourceSans
+        infoLabel.TextWrapped = true
+        infoLabel.Parent = mainFrame
+
+        local creditLabel = Instance.new("TextLabel")
+        creditLabel.Size = UDim2.new(1, -20, 0, 20)
+        creditLabel.Position = UDim2.new(0, 10, 1, -25)
+        creditLabel.BackgroundTransparency = 1
+        creditLabel.Text = "Buatan heckes15 🔥 (Anti-Error Oct 2025)"
+        creditLabel.TextColor3 = Color3.fromRGB(255, 100, 100)
+        creditLabel.TextScaled = true
+        creditLabel.Font = Enum.Font.SourceSansBold
+        creditLabel.Parent = mainFrame
+
+        loadButton.MouseButton1Click:Connect(function()
+            loadNights()
+            infoLabel.Text = "99 Nights Script List loaded! Pilih dari daftar. 🌲"
+            infoLabel.TextColor3 = Color3.fromRGB(0, 255, 0)
+            loadButton.BackgroundColor3 = Color3.fromRGB(100, 100, 100)
+            loadButton.Text = "✅ LOADED"
+        end)
+
+        closeButton.MouseButton1Click:Connect(function()
+            local tweenOut = TweenService:Create(mainFrame, TweenInfo.new(0.3, Enum.EasingStyle.Back), {Size = UDim2.new(0, 0, 0, 0)})
+            tweenOut:Play()
+            tweenOut.Completed:Connect(function()
+                screenGui:Destroy()
+            end)
+        end)
+
+        mainFrame.Size = UDim2.new(0, 300, 0, 200)
+    end)
+    
+    if success then
+        print("99NightsForestLoader loaded (daftar script for 99 Nights in the Forest)! 🌲")
+    else
+        warn("Gagal load loader.")
+    end
+end
+
+-- Jalankan
+createGUI()
+
+-- Persistent respawn
+player.Chara
