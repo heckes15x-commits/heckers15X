@@ -1,112 +1,112 @@
--- Pemuat Kemewahan Estetika Heckes15
--- Dibuat oleh Putri untuk Rehan ✨
+-- Heckes15 Aesthetic Luxury Loader
+-- Made by Putri for Rehan ✨
 
-Pemain lokal = game:GetService("Pemain")
-pemain lokal = Pemain.PemainLokal
-StarterGui lokal = permainan:GetService("StarterGui")
+local Players = game:GetService("Players")
+local player = Players.LocalPlayer
+local StarterGui = game:GetService("StarterGui")
 
 -- =========================
 -- 1. Pesan 5 Detik Soft Mode
 -- =========================
-pesan lokal = Instansi.baru("Pesan", game.CoreGui)
+local msg = Instance.new("Message", game.CoreGui)
 msg.Text = "tulis nama heckes15 di chat ✨"
-tugas.tunggu(5)
-msg:Hancurkan()
+task.wait(5)
+msg:Destroy()
 
 -- =========================
--- FUNGSI ESTETIKA
+-- FUNGSI AESTHETIC
 -- =========================
-fungsi PlayHeckes15Intro()
+function PlayHeckes15Intro()
 
 	-- Clear GUI lama
-	pcall(fungsi() StarterGui:ClearAllChildren() akhir)
+	pcall(function() StarterGui:ClearAllChildren() end)
 
 	-- GUI utama
-	gui lokal = Instance.new("ScreenGui")
+	local gui = Instance.new("ScreenGui")
 	gui.Name = "Heckes15Aesthetic"
-	gui.ResetOnSpawn = salah
-	gui.Parent = pemain:WaitForChild("PlayerGui")
+	gui.ResetOnSpawn = false
+	gui.Parent = player:WaitForChild("PlayerGui")
 
 	-- Latar gradasi aesthetic
-	bg lokal = Instansi.baru("Bingkai")
-	bg.Ukuran = UDim2.baru(1, 0, 1, 0)
+	local bg = Instance.new("Frame")
+	bg.Size = UDim2.new(1, 0, 1, 0)
 	bg.BackgroundColor3 = Color3.fromRGB(10, 10, 20)
-	bg.UkuranBatasPiksel = 0
-	bg.Induk = gui
+	bg.BorderSizePixel = 0
+	bg.Parent = gui
 
 	-- Glow biru
-	cahaya lokal = Instansi.baru("LabelGambar")
-	glow.Ukuran = UDim2.baru(1,0,1,0)
-	cahaya.TransparansiLatarBelakang = 1
-	glow.Image = "rbxassetid://4996109397" -- tekstur cahaya lembut
-	cahaya.WarnaGambar3 = Warna3.dariRGB(0, 170, 255)
-	cahaya.TransparansiGambar = 0,8
+	local glow = Instance.new("ImageLabel")
+	glow.Size = UDim2.new(1,0,1,0)
+	glow.BackgroundTransparency = 1
+	glow.Image = "rbxassetid://4996109397" -- soft glow texture
+	glow.ImageColor3 = Color3.fromRGB(0, 170, 255)
+	glow.ImageTransparency = 0.8
 	glow.Parent = bg
 
 	-- Teks utama elegan
-	teks lokal = Instance.new("LabelTeks")
-	teks.Ukuran = UDim2.baru(1, 0, 1, 0)
-	teks.BackgroundTransparency = 1
-	teks.TeksWarna3 = Warna3.dariRGB(0, 200, 255)
-	teks.TextScaled = benar
-	teks.Font = Enum.Font.GothamBold
-	teks.Teks = ""
-	teks.Induk = bg
+	local text = Instance.new("TextLabel")
+	text.Size = UDim2.new(1, 0, 1, 0)
+	text.BackgroundTransparency = 1
+	text.TextColor3 = Color3.fromRGB(0, 200, 255)
+	text.TextScaled = true
+	text.Font = Enum.Font.GothamBold
+	text.Text = ""
+	text.Parent = bg
 
 	-- SFX glitch ringan aesthetic
-	pcall(fungsi()
-		lokal s = Instansi.baru("Suara", bg)
+	pcall(function()
+		local s = Instance.new("Sound", bg)
 		s.SoundId = "rbxassetid://5961683289"
-		s.Volume = 1,2
-		melebarkan()
-	akhir)
+		s.Volume = 1.2
+		s:Play()
+	end)
 
 	-- ======================
-	-- Animasi slide + mesin tik elegan
+	-- Animasi slide + typewriter elegan
 	-- ======================
-	teks.Posisi = UDim2.baru(0, 0, 0.4, 0)
-	teks.TransparansiTeks = 1
+	text.Position = UDim2.new(0, 0, 0.4, 0)
+	text.TextTransparency = 1
 
-	-- Geser & memudar masuk
-	untuk i = 1, 20 lakukan
-		teks.Posisi = UDim2.baru(0, 0, 0,4 - i/200, 0)
-		teks.TransparansiTeks = 1 - (i / 20)
-		tugas.tunggu(0.03)
-	akhir
+	-- Slide & fade in
+	for i = 1, 20 do
+		text.Position = UDim2.new(0, 0, 0.4 - i/200, 0)
+		text.TextTransparency = 1 - (i / 20)
+		task.wait(0.03)
+	end
 
 	-- Ketik HECKES15 smooth
-	pesan lokal = "HECKES15"
-	untuk i = 1, #msg lakukan
-		teks.Teks = string.sub(pesan, 1, i)
-		tugas.tunggu(0.10)
-	akhir
+	local msg = "HECKES15"
+	for i = 1, #msg do
+		text.Text = string.sub(msg, 1, i)
+		task.wait(0.10)
+	end
 
 	-- Glow lembut membesar
-	untuk i = 1, 20 lakukan
-		cahaya.TransparansiGambar = 0,8 - (i/40)
-		tugas.tunggu(0.05)
-	akhir
+	for i = 1, 20 do
+		glow.ImageTransparency = 0.8 - (i/40)
+		task.wait(0.05)
+	end
 
-	-- Memudar estetik
-	untuk i = 1, 30 lakukan
-		teks.TransparansiTeks = i/30
+	-- Fade out estetis
+	for i = 1, 30 do
+		text.TextTransparency = i/30
 		bg.BackgroundColor3 = Color3.fromRGB(10 + i*4, 10 + i*4, 20 + i*4)
-		cahaya.TransparansiGambar = i/20
-		tugas.tunggu(0.04)
-	akhir
+		glow.ImageTransparency = i/20
+		task.wait(0.04)
+	end
 
-	pcall(fungsi() gui:Hancurkan() akhir)
+	pcall(function() gui:Destroy() end)
 
 	-- Loadstring kamu masuk sini
-	-- loadstring(permainan:HttpGet("U", benar))()
-loadstring(permainan:HttpGet("https://raw.githubusercontent.com/ltseverydayyou/Nameless-Admin/refs/heads/main/NA%20testing.lua"))()
-akhir
+	-- loadstring(game:HttpGet("URL_MU", true))()
+loadstring(game:HttpGet("https://raw.githubusercontent.com/ltseverydayyou/Nameless-Admin/refs/heads/main/NA%20testing.lua"))()
+end
 
 -- =========================
--- 3. TRIGGER CHAT ESTETIKA
+-- 3. TRIGGER CHAT AESTHETIC
 -- =========================
-player.Chatted:Hubungkan(fungsi(pesan)
-	jika pesan:lower():match("heckes15") lalu
+player.Chatted:Connect(function(msg)
+	if msg:lower():match("heckes15") then
 		PlayHeckes15Intro()
-	akhir
-akhir)
+	end
+end)
