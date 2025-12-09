@@ -1,116 +1,112 @@
--- Creator: bro
--- GUI Name: Heckes15 Hub
-
---------------------------------------------------------------------
--- 1. MESSAGE 5 DETIK SAAT EXECUTE
---------------------------------------------------------------------
-
-local m = Instance.new("Message", game.CoreGui)
-m.Text = "tulis nama heckes15 di chat"
-task.wait(5)
-m:Destroy()
-
---------------------------------------------------------------------
--- 2. SIAPKAN GUI HUB (tapi nggak muncul dulu)
---------------------------------------------------------------------
+-- Heckes15 Aesthetic Luxury Loader
+-- Made by Putri for Rehan ✨
 
 local Players = game:GetService("Players")
 local player = Players.LocalPlayer
+local StarterGui = game:GetService("StarterGui")
 
-local Hub = Instance.new("ScreenGui", game.CoreGui)
-Hub.Name = "Heckes15Hub"
-Hub.Enabled = false
+-- =========================
+-- 1. Pesan 5 Detik Soft Mode
+-- =========================
+local msg = Instance.new("Message", game.CoreGui)
+msg.Text = "tulis nama heckes15 di chat ✨"
+task.wait(5)
+msg:Destroy()
 
-local Frame = Instance.new("Frame", Hub)
-Frame.Size = UDim2.new(0,300,0,150)
-Frame.Position = UDim2.new(0.5,-150,0.5,-75)
-Frame.BackgroundColor3 = Color3.fromRGB(20,20,20)
+-- =========================
+-- FUNGSI AESTHETIC
+-- =========================
+function PlayHeckes15Intro()
 
-local Title = Instance.new("TextLabel", Frame)
-Title.Size = UDim2.new(1,0,1,0)
-Title.Text = "Heckes15 Hub"
-Title.TextColor3 = Color3.fromRGB(255,255,255)
-Title.BackgroundTransparency = 1
+	-- Clear GUI lama
+	pcall(function() StarterGui:ClearAllChildren() end)
 
---------------------------------------------------------------------
--- 3. FUNGSI INTRO (SCRIPT KE 2)
---------------------------------------------------------------------
-
-local function playIntro()
-	-- Buat ScreenGui Intro
+	-- GUI utama
 	local gui = Instance.new("ScreenGui")
-	gui.Name = "Heckes15Intro"
+	gui.Name = "Heckes15Aesthetic"
 	gui.ResetOnSpawn = false
 	gui.Parent = player:WaitForChild("PlayerGui")
 
-	-- Background
+	-- Latar gradasi aesthetic
 	local bg = Instance.new("Frame")
 	bg.Size = UDim2.new(1, 0, 1, 0)
-	bg.BackgroundColor3 = Color3.new(0, 0, 0)
+	bg.BackgroundColor3 = Color3.fromRGB(10, 10, 20)
 	bg.BorderSizePixel = 0
 	bg.Parent = gui
 
-	-- Teks HECKES15
+	-- Glow biru
+	local glow = Instance.new("ImageLabel")
+	glow.Size = UDim2.new(1,0,1,0)
+	glow.BackgroundTransparency = 1
+	glow.Image = "rbxassetid://4996109397" -- soft glow texture
+	glow.ImageColor3 = Color3.fromRGB(0, 170, 255)
+	glow.ImageTransparency = 0.8
+	glow.Parent = bg
+
+	-- Teks utama elegan
 	local text = Instance.new("TextLabel")
 	text.Size = UDim2.new(1, 0, 1, 0)
 	text.BackgroundTransparency = 1
-	text.TextColor3 = Color3.new(1, 0, 0)
+	text.TextColor3 = Color3.fromRGB(0, 200, 255)
 	text.TextScaled = true
-	text.Font = Enum.Font.GothamBlack
+	text.Font = Enum.Font.GothamBold
 	text.Text = ""
 	text.Parent = bg
 
-	-- Suara glitch
+	-- SFX glitch ringan aesthetic
 	pcall(function()
-		local sound = Instance.new("Sound", bg)
-		sound.SoundId = "rbxassetid://1844158571"
-		sound.Volume = 2
-		sound:Play()
+		local s = Instance.new("Sound", bg)
+		s.SoundId = "rbxassetid://5961683289"
+		s.Volume = 1.2
+		s:Play()
 	end)
 
-	-- Efek ketik
-	local message = "HECKES15"
-	for i = 1, #message do
-		text.Text = string.sub(message, 1, i)
-		task.wait(0.15)
+	-- ======================
+	-- Animasi slide + typewriter elegan
+	-- ======================
+	text.Position = UDim2.new(0, 0, 0.4, 0)
+	text.TextTransparency = 1
+
+	-- Slide & fade in
+	for i = 1, 20 do
+		text.Position = UDim2.new(0, 0, 0.4 - i/200, 0)
+		text.TextTransparency = 1 - (i / 20)
+		task.wait(0.03)
 	end
 
-	-- Avatar hitam
-	pcall(function()
-		local char = player.Character or player.CharacterAdded:Wait()
-		for _, part in pairs(char:GetChildren()) do
-			if part:IsA("BasePart") then
-				part.Color = Color3.new(0, 0, 0)
-			end
-		end
-	end)
+	-- Ketik HECKES15 smooth
+	local msg = "HECKES15"
+	for i = 1, #msg do
+		text.Text = string.sub(msg, 1, i)
+		task.wait(0.10)
+	end
 
-	-- Glitch cepat
-	for i = 1, 10 do
-		bg.BackgroundTransparency = math.random()
-		text.TextColor3 = Color3.new(math.random(), 0, 0)
+	-- Glow lembut membesar
+	for i = 1, 20 do
+		glow.ImageTransparency = 0.8 - (i/40)
 		task.wait(0.05)
 	end
 
-	-- Fade
+	-- Fade out estetis
 	for i = 1, 30 do
-		text.TextTransparency = i / 30
-		bg.BackgroundTransparency = i / 30
-		task.wait(0.05)
+		text.TextTransparency = i/30
+		bg.BackgroundColor3 = Color3.fromRGB(10 + i*4, 10 + i*4, 20 + i*4)
+		glow.ImageTransparency = i/20
+		task.wait(0.04)
 	end
 
-	gui:Destroy()
+	pcall(function() gui:Destroy() end)
+
+	-- Loadstring kamu masuk sini
+	-- loadstring(game:HttpGet("U", true))()
+loadstring(game:HttpGet("https://raw.githubusercontent.com/heckes15x-commits/heckers15X/refs/heads/main/99%20nights%20in%20the%20forest%20trend%F0%9F%94%A5%F0%9F%94%A5", true))()
 end
 
---------------------------------------------------------------------
--- 4. CHAT TRIGGER (MENGETIK "heckes15")
---    MUNCULKAN INTRO → HABIS INTRO → BUKA GUI HUB
---------------------------------------------------------------------
-
-Players.LocalPlayer.Chatted:Connect(function(msg)
-	if msg:lower() == "heckes15" then
-		playIntro()
-loadstring(game:HttpGet("https://raw.githubusercontent.com/heckes15x-commits/heckers15X/refs/heads/main/99%20nights%20in%20the%20forest%20trend%F0%9F%94%A5%F0%9F%94%A5", true))()
-		Hub.Enabled = true
+-- =========================
+-- 3. TRIGGER CHAT AESTHETIC
+-- =========================
+player.Chatted:Connect(function(msg)
+	if msg:lower():match("heckes15") then
+		PlayHeckes15Intro()
 	end
 end)
