@@ -1,0 +1,325 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>ModJoy Elite v3.0 - Masa Depan Modifikasi Android</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link href="https://unpkg.com/aos@2.3.1/dist/aos.css" rel="stylesheet">
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&family=Inter:wght@900&display=swap');
+        
+        :root {
+            --primary: #00ff88;
+            --primary-dark: #00bd65;
+            --bg-deep: #05070a;
+            --accent: #3d5afe;
+        }
+
+        body {
+            font-family: 'Plus Jakarta Sans', sans-serif;
+            background-color: var(--bg-deep);
+            color: white;
+            overflow-x: hidden;
+            cursor: default;
+        }
+
+        /* Particle Background */
+        #particles-js {
+            position: absolute;
+            width: 100%;
+            height: 100%;
+            z-index: -1;
+        }
+
+        .text-gradient {
+            background: linear-gradient(to right, #ffffff, var(--primary), #3d5afe);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-size: 200% auto;
+            animation: shine 5s linear infinite;
+        }
+
+        @keyframes shine {
+            to { background-position: 200% center; }
+        }
+
+        .premium-card {
+            background: rgba(255, 255, 255, 0.03);
+            backdrop-filter: blur(20px);
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            border-radius: 32px;
+            transition: all 0.4s cubic-bezier(0.23, 1, 0.32, 1);
+        }
+
+        .premium-card:hover {
+            border-color: var(--primary);
+            box-shadow: 0 0 40px rgba(0, 255, 136, 0.15);
+            transform: translateY(-5px) scale(1.01);
+        }
+
+        .btn-elite {
+            background: linear-gradient(135deg, var(--primary) 0%, var(--accent) 100%);
+            box-shadow: 0 10px 20px -10px rgba(0, 255, 136, 0.5);
+            transition: all 0.3s ease;
+            position: relative;
+            z-index: 1;
+        }
+
+        .btn-elite::before {
+            content: '';
+            position: absolute;
+            inset: 0;
+            background: linear-gradient(135deg, var(--accent) 0%, var(--primary) 100%);
+            opacity: 0;
+            transition: opacity 0.3s ease;
+            z-index: -1;
+            border-radius: inherit;
+        }
+
+        .btn-elite:hover::before { opacity: 1; }
+        .btn-elite:hover { transform: scale(1.05); }
+
+        .app-icon-glow {
+            filter: drop-shadow(0 0 15px var(--primary-glow));
+        }
+
+        /* Phone Screen Inner Shadow */
+        .phone-display {
+            box-shadow: inset 0 0 20px rgba(0,0,0,0.8);
+        }
+
+        .custom-cursor {
+            width: 20px;
+            height: 20px;
+            border: 2px solid var(--primary);
+            border-radius: 50%;
+            position: fixed;
+            pointer-events: none;
+            z-index: 9999;
+            transition: transform 0.1s ease;
+            mix-blend-mode: difference;
+        }
+
+        .no-scrollbar::-webkit-scrollbar { display: none; }
+    </style>
+</head>
+<body>
+
+    <div class="custom-cursor" id="cursor"></div>
+    <div id="particles-js"></div>
+
+    <!-- Navigasi -->
+    <nav class="fixed w-full z-50 py-6 px-6">
+        <div class="max-w-7xl mx-auto flex justify-between items-center backdrop-blur-md bg-black/20 p-4 rounded-3xl border border-white/5 shadow-2xl">
+            <div class="flex items-center gap-3">
+                <div class="w-10 h-10 bg-gradient-to-br from-[#00ff88] to-[#3d5afe] rounded-xl flex items-center justify-center shadow-lg animate-pulse">
+                    <i class="fas fa-bolt text-black font-bold"></i>
+                </div>
+                <span class="text-2xl font-black tracking-tighter italic">MODJOY <span class="text-[#00ff88]">PRO</span></span>
+            </div>
+            <div class="hidden md:flex gap-8 text-sm font-bold uppercase tracking-widest text-gray-400">
+                <a href="#eksplor" class="hover:text-white transition-colors">Eksplor</a>
+                <a href="#keamanan" class="hover:text-white transition-colors">Keamanan</a>
+                <a href="#komunitas" class="hover:text-white transition-colors">Komunitas</a>
+            </div>
+            <button class="btn-elite px-6 py-3 rounded-xl font-bold text-sm text-black uppercase tracking-tighter">
+                Masuk Member
+            </button>
+        </div>
+    </nav>
+
+    <!-- Hero -->
+    <section class="min-h-screen pt-44 pb-20 px-6 flex flex-col items-center justify-center text-center relative overflow-hidden">
+        <div class="absolute top-1/4 left-1/2 -translate-x-1/2 w-[800px] h-[400px] bg-blue-600/10 blur-[150px] -z-10 rounded-full"></div>
+        
+        <div data-aos="zoom-out" data-aos-duration="1500">
+            <h1 class="text-7xl md:text-9xl font-[900] mb-8 leading-none tracking-tighter">
+                MODDING <br> <span class="text-gradient">EVOLUTION.</span>
+            </h1>
+            <p class="text-gray-400 text-lg md:text-2xl mb-12 max-w-2xl mx-auto leading-relaxed">
+                Platform elit untuk modifikasi Android. Keamanan tingkat militer, kecepatan akses tanpa batas, dan koleksi paling eksklusif di dunia.
+            </p>
+            
+            <div class="flex flex-wrap justify-center gap-6">
+                <button class="btn-elite px-12 py-6 rounded-2xl font-black text-xl text-black flex items-center gap-4 shadow-[0_20px_40px_rgba(0,255,136,0.3)]">
+                    <i class="fab fa-android"></i>
+                    UNDUH SEKARANG
+                </button>
+                <button class="bg-white/5 border border-white/10 px-12 py-6 rounded-2xl font-black text-xl hover:bg-white/10 transition-all backdrop-blur-md">
+                    DASHBOARD WEB
+                </button>
+            </div>
+        </div>
+
+        <!-- Floating Stats -->
+        <div class="grid grid-cols-2 md:grid-cols-4 gap-12 mt-32 max-w-5xl w-full" data-aos="fade-up" data-aos-delay="400">
+            <div class="text-center">
+                <div class="text-4xl font-black mb-1">50M+</div>
+                <div class="text-[#00ff88] text-xs font-bold uppercase tracking-widest">Downloads</div>
+            </div>
+            <div class="text-center">
+                <div class="text-4xl font-black mb-1">100%</div>
+                <div class="text-[#00ff88] text-xs font-bold uppercase tracking-widest">Safe Rate</div>
+            </div>
+            <div class="text-center">
+                <div class="text-4xl font-black mb-1">24/7</div>
+                <div class="text-[#00ff88] text-xs font-bold uppercase tracking-widest">Live Updates</div>
+            </div>
+            <div class="text-center">
+                <div class="text-4xl font-black mb-1">No.1</div>
+                <div class="text-[#00ff88] text-xs font-bold uppercase tracking-widest">Global Rank</div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Bento Section Upgrade -->
+    <section class="py-24 px-6 max-w-7xl mx-auto">
+        <div class="grid md:grid-cols-4 grid-rows-2 gap-6 h-auto md:h-[600px]">
+            <div class="premium-card md:col-span-2 md:row-span-2 p-12 flex flex-col justify-between relative overflow-hidden group" data-aos="fade-right">
+                <div class="relative z-10">
+                    <h3 class="text-5xl font-black mb-6 italic">KEAMANAN <br>MUTLAK.</h3>
+                    <p class="text-gray-400 text-lg max-w-xs">Enkripsi SHA-256 dan verifikasi manual setiap jam untuk memastikan nol malware.</p>
+                </div>
+                <div class="mt-12 flex gap-4">
+                    <div class="w-16 h-16 bg-[#00ff88]/10 rounded-2xl flex items-center justify-center border border-[#00ff88]/20">
+                        <i class="fas fa-shield-alt text-[#00ff88] text-2xl"></i>
+                    </div>
+                </div>
+                <i class="fas fa-fingerprint absolute -right-10 -bottom-10 text-[250px] opacity-5 group-hover:opacity-10 transition-opacity"></i>
+            </div>
+
+            <div class="premium-card md:col-span-2 p-10 flex items-center justify-between" data-aos="fade-down" data-aos-delay="200">
+                <div>
+                    <h3 class="text-2xl font-black mb-2 uppercase">Server Global</h3>
+                    <p class="text-gray-400">Kecepatan unduh hingga 1Gbps tanpa batas wilayah.</p>
+                </div>
+                <i class="fas fa-globe-asia text-5xl text-blue-500 opacity-50"></i>
+            </div>
+
+            <div class="premium-card p-8 flex flex-col justify-center text-center" data-aos="fade-up" data-aos-delay="300">
+                <i class="fas fa-infinity text-4xl text-[#00ff88] mb-4"></i>
+                <h4 class="font-bold text-sm uppercase">Mod Tak Terbatas</h4>
+            </div>
+
+            <div class="premium-card p-8 flex flex-col justify-center text-center" data-aos="fade-up" data-aos-delay="400">
+                <i class="fas fa-bolt text-4xl text-yellow-400 mb-4"></i>
+                <h4 class="font-bold text-sm uppercase">Instalasi Instan</h4>
+            </div>
+        </div>
+    </section>
+
+    <!-- App Gallery Slider Preview -->
+    <section class="py-20 bg-white/5 border-y border-white/5 overflow-hidden">
+        <div class="flex whitespace-nowrap gap-12 animate-marquee">
+            <!-- Repeat icons for marquee effect -->
+            <div class="flex gap-12 items-center grayscale hover:grayscale-0 transition-all duration-500 opacity-50 hover:opacity-100">
+                <div class="flex items-center gap-4 text-2xl font-black"><i class="fas fa-gamepad"></i> MINECRAFT</div>
+                <div class="flex items-center gap-4 text-2xl font-black"><i class="fab fa-spotify"></i> SPOTIFY</div>
+                <div class="flex items-center gap-4 text-2xl font-black"><i class="fab fa-instagram"></i> INSTAGRAM</div>
+                <div class="flex items-center gap-4 text-2xl font-black"><i class="fab fa-discord"></i> DISCORD</div>
+                <div class="flex items-center gap-4 text-2xl font-black"><i class="fas fa-video"></i> CAPCUT</div>
+                <div class="flex items-center gap-4 text-2xl font-black"><i class="fas fa-camera"></i> PICSART</div>
+            </div>
+            <!-- Repeat -->
+            <div class="flex gap-12 items-center grayscale hover:grayscale-0 transition-all duration-500 opacity-50 hover:opacity-100">
+                <div class="flex items-center gap-4 text-2xl font-black"><i class="fas fa-gamepad"></i> MINECRAFT</div>
+                <div class="flex items-center gap-4 text-2xl font-black"><i class="fab fa-spotify"></i> SPOTIFY</div>
+                <div class="flex items-center gap-4 text-2xl font-black"><i class="fab fa-instagram"></i> INSTAGRAM</div>
+                <div class="flex items-center gap-4 text-2xl font-black"><i class="fab fa-discord"></i> DISCORD</div>
+                <div class="flex items-center gap-4 text-2xl font-black"><i class="fas fa-video"></i> CAPCUT</div>
+                <div class="flex items-center gap-4 text-2xl font-black"><i class="fas fa-camera"></i> PICSART</div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Footer -->
+    <footer class="py-32 px-6">
+        <div class="max-w-7xl mx-auto border-t border-white/10 pt-20 flex flex-col md:flex-row justify-between gap-20">
+            <div>
+                <div class="flex items-center gap-3 mb-8">
+                    <div class="w-8 h-8 bg-[#00ff88] rounded flex items-center justify-center text-black font-black">M</div>
+                    <span class="text-xl font-black italic">MODJOY</span>
+                </div>
+                <p class="text-gray-500 max-w-xs mb-10 text-sm">Destinasi terakhir untuk modifikasi aplikasi dan game premium. Bergabunglah dengan revolusi hari ini.</p>
+                <div class="flex gap-6 text-xl">
+                    <i class="fab fa-telegram-plane hover:text-[#00ff88] cursor-pointer"></i>
+                    <i class="fab fa-discord hover:text-[#00ff88] cursor-pointer"></i>
+                    <i class="fab fa-youtube hover:text-[#00ff88] cursor-pointer"></i>
+                </div>
+            </div>
+            <div class="grid grid-cols-2 md:grid-cols-3 gap-20">
+                <div>
+                    <h5 class="text-[#00ff88] font-bold text-xs uppercase mb-6 tracking-widest">Produk</h5>
+                    <ul class="space-y-4 text-sm text-gray-400">
+                        <li>Aplikasi Mod</li>
+                        <li>Game Mod</li>
+                        <li>Update Terbaru</li>
+                    </ul>
+                </div>
+                <div>
+                    <h5 class="text-[#00ff88] font-bold text-xs uppercase mb-6 tracking-widest">Perusahaan</h5>
+                    <ul class="space-y-4 text-sm text-gray-400">
+                        <li>Tim Kami</li>
+                        <li>Keamanan</li>
+                        <li>DMCA</li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+        <div class="text-center mt-32 text-gray-600 text-[10px] font-bold tracking-[0.3em] uppercase">
+            &copy; 2025 ModJoy Elite v3.0 // Developed for Android Enthusiasts
+        </div>
+    </footer>
+
+    <style>
+        @keyframes marquee {
+            0% { transform: translateX(0); }
+            100% { transform: translateX(-50%); }
+        }
+        .animate-marquee {
+            animation: marquee 30s linear infinite;
+        }
+    </style>
+
+    <script src="https://unpkg.com/aos@2.3.1/dist/aos.js"></script>
+    <script src="https://cdn.jsdelivr.net/particles.js/2.0.0/particles.min.js"></script>
+    <script>
+        AOS.init();
+
+        // Custom Cursor
+        const cursor = document.getElementById('cursor');
+        document.addEventListener('mousemove', (e) => {
+            cursor.style.left = e.clientX + 'px';
+            cursor.style.top = e.clientY + 'px';
+        });
+
+        document.addEventListener('mousedown', () => cursor.style.transform = 'scale(1.5)');
+        document.addEventListener('mouseup', () => cursor.style.transform = 'scale(1)');
+
+        // Particles Configuration
+        particlesJS('particles-js', {
+            "particles": {
+                "number": { "value": 80 },
+                "color": { "value": "#00ff88" },
+                "shape": { "type": "circle" },
+                "opacity": { "value": 0.2 },
+                "size": { "value": 3 },
+                "line_linked": {
+                    "enable": true,
+                    "distance": 150,
+                    "color": "#00ff88",
+                    "opacity": 0.1,
+                    "width": 1
+                },
+                "move": { "enable": true, "speed": 2 }
+            },
+            "interactivity": {
+                "events": { "onhover": { "enable": true, "mode": "grab" } }
+            }
+        });
+    </script>
+</body>
+</html>
+
